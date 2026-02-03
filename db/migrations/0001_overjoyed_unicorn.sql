@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "message_count" integer DEFAULT 50 NOT NULL;

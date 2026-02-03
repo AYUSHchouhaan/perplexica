@@ -1,0 +1,1037 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* --- Custom Prose Styles for AI Messages --- */
+
+/* --- Base Typography --- */
+.prose {
+  --tw-prose-headings: #1a1a1a;
+  --tw-prose-body: #2b2b2b;
+  --tw-prose-bold: #000;
+  --tw-prose-links: #2563eb;
+  --tw-prose-links-hover: #1d4ed8;
+  --tw-prose-code: #e11d48;
+  --tw-prose-quotes: #374151;
+  line-height: 1.75;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  max-width: none;
+}
+
+.dark .prose {
+  --tw-prose-headings: #fff;
+  --tw-prose-body: #d1d5db;
+  --tw-prose-bold: #fff;
+  --tw-prose-links: #93c5fd;
+  --tw-prose-links-hover: #bfdbfe;
+  --tw-prose-code: #f472b6;
+  --tw-prose-quotes: #9ca3af;
+}
+
+/* --- Headings --- */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  line-height: 1.3;
+  font-weight: 700;
+  scroll-margin-top: 5rem;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.prose h1 { font-size: 1.9rem; }
+.prose h2 { font-size: 1.6rem; }
+.prose h3 { font-size: 1.35rem; }
+.prose h4 { font-size: 1.15rem; }
+
+/* --- Paragraphs & Lists --- */
+.prose p, .prose ul, .prose ol {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+/* Enable bullet and number markers in lists inside .prose */
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem; /* Indent bullets */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+/* --- Blockquotes --- */
+.prose blockquote {
+  border-left: 4px solid #60a5fa;
+  background-color: rgba(96, 165, 250, 0.08);
+  padding: 0.8rem 1rem;
+  border-radius: 0.4rem;
+  font-style: italic;
+}
+.dark .prose blockquote {
+  border-left-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #cbd5e1;
+}
+
+/* --- Code --- */
+/* Inline code (like `globals.css`) */
+.prose code {
+  background-color: rgba(240, 240, 240, 0.8);
+  color: #e11d48; /* Tailwind's rose-600 */
+  font-weight: 500;
+  font-size: 0.9em;
+  border-radius: 0.25rem;
+  padding: 0.15rem 0.35rem;
+}
+
+/* Dark mode inline code */
+.dark .prose code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f472b6; /* pink-400 */
+}
+
+/* Avoid box styling inside code blocks */
+.prose pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 0.875rem;
+}
+.prose pre {
+        background-color: #374151 !important;
+  border-radius: 0.5rem;
+  padding: 0 !important;
+  margin: 0.5rem 0 !important;
+  overflow: visible;
+  border: none;
+}
+.dark .prose pre {
+        background-color: #374151 !important;
+}
+
+/* --- Tables --- */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  border: 1px solid #e5e7eb;
+}
+.prose th, .prose td {
+  padding: 0.6rem 1rem;
+  border: 1px solid #e5e7eb;
+}
+.dark .prose th, .dark .prose td {
+  border-color: #374151;
+}
+
+/* --- Horizontal Rule --- */
+.prose hr {
+  margin: 2em 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.dark .prose hr {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Images --- */
+.prose img {
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Callouts (for emojis / examples) --- */
+.prose p:has(strong:only-child) {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  font-weight: 600;
+}
+
+*,:after,:before {
+    --tw-border-spacing-x: 0;
+    --tw-border-spacing-y: 0;
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    --tw-pan-x: ;
+    --tw-pan-y: ;
+    --tw-pinch-zoom: ;
+    --tw-scroll-snap-strictness: proximity;
+    --tw-gradient-from-position: ;
+    --tw-gradient-via-position: ;
+    --tw-gradient-to-position: ;
+    --tw-ordinal: ;
+    --tw-slashed-zero: ;
+    --tw-numeric-figure: ;
+    --tw-numeric-spacing: ;
+    --tw-numeric-fraction: ;
+    --tw-ring-inset: ;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59,130,246,.5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    --tw-blur: ;
+    --tw-brightness: ;
+    --tw-contrast: ;
+    --tw-grayscale: ;
+    --tw-hue-rotate: ;
+    --tw-invert: ;
+    --tw-saturate: ;
+    --tw-sepia: ;
+    --tw-drop-shadow: ;
+    --tw-backdrop-blur: ;
+    --tw-backdrop-brightness: ;
+    --tw-backdrop-contrast: ;
+    --tw-backdrop-grayscale: ;
+    --tw-backdrop-hue-rotate: ;
+    --tw-backdrop-invert: ;
+    --tw-backdrop-opacity: ;
+    --tw-backdrop-saturate: ;
+    --tw-backdrop-sepia: ;
+    --tw-contain-size: ;
+    --tw-contain-layout: ;
+    --tw-contain-paint: ;
+    --tw-contain-style:
+}
+
+/* Custom scrollbars for chat and overflow areas */
+/* Targets elements using the project's `overflow-y-scroll` class */
+.overflow-y-scroll {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(255,255,255,0.06) transparent; /* Firefox thumb + track (dark default) */
+}
+
+/* WebKit browsers */
+.overflow-y-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.overflow-y-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+    border-radius: 999px;
+}
+
+/* Dark theme thumb */
+.dark .overflow-y-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+/* Light theme thumb */
+:not(.dark) .overflow-y-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.04));
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.overflow-y-scroll::-webkit-scrollbar-thumb:hover {
+    filter: brightness(1.25);
+}
+
+/* Small rounded corner in bottom-right when both scrollbars visible */
+.overflow-y-scroll::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Accessibility: ensure contrast for thin thumb on hover/focus */
+.overflow-y-scroll:focus-visible::-webkit-scrollbar-thumb,
+.overflow-y-scroll:hover::-webkit-scrollbar-thumb {
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.12) inset;
+}
+
+
+::backdrop {
+    --tw-border-spacing-x: 0;
+    --tw-border-spacing-y: 0;
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    --tw-pan-x: ;
+    --tw-pan-y: ;
+    --tw-pinch-zoom: ;
+    --tw-scroll-snap-strictness: proximity;
+    --tw-gradient-from-position: ;
+    --tw-gradient-via-position: ;
+    --tw-gradient-to-position: ;
+    --tw-ordinal: ;
+    --tw-slashed-zero: ;
+    --tw-numeric-figure: ;
+    --tw-numeric-spacing: ;
+    --tw-numeric-fraction: ;
+    --tw-ring-inset: ;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59,130,246,.5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    --tw-blur: ;
+    --tw-brightness: ;
+    --tw-contrast: ;
+    --tw-grayscale: ;
+    --tw-hue-rotate: ;
+    --tw-invert: ;
+    --tw-saturate: ;
+    --tw-sepia: ;
+    --tw-drop-shadow: ;
+    --tw-backdrop-blur: ;
+    --tw-backdrop-brightness: ;
+    --tw-backdrop-contrast: ;
+    --tw-backdrop-grayscale: ;
+    --tw-backdrop-hue-rotate: ;
+    --tw-backdrop-invert: ;
+    --tw-backdrop-opacity: ;
+    --tw-backdrop-saturate: ;
+    --tw-backdrop-sepia: ;
+    --tw-contain-size: ;
+    --tw-contain-layout: ;
+    --tw-contain-paint: ;
+    --tw-contain-style:
+}
+
+/*
+! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com
+*/
+*,:after,:before {
+    box-sizing: border-box;
+    border: 0 solid #e5e7eb
+}
+
+:after,:before {
+    --tw-content: ""
+}
+
+:host,html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    -webkit-tap-highlight-color: transparent
+}
+
+body {
+    margin: 0;
+    line-height: inherit;
+    filter: hue-rotate(var(--hue-rotation)) contrast(var(--contrast-value)) saturate(var(--saturation-value));
+}
+
+hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px
+}
+
+abbr:where([title]) {
+    text-decoration: underline dotted
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size: inherit;
+    font-weight: inherit
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit
+}
+
+b,strong {
+    font-weight: bolder
+}
+
+code,kbd,pre,samp {
+    font-family: BerkeleyMono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    font-size: 1em
+}
+
+small {
+    font-size: 80%
+}
+
+sub,sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+sub {
+    bottom: -.25em
+}
+
+sup {
+    top: -.5em
+}
+
+table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse
+}
+
+:-moz-focusring {
+    outline: auto
+}
+
+:-moz-ui-invalid {
+    box-shadow: none
+}
+
+progress {
+    vertical-align: baseline
+}
+
+::-webkit-inner-spin-button,::-webkit-outer-spin-button {
+    height: auto
+}
+
+[type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px
+}
+
+::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit
+}
+
+summary {
+    display: list-item
+}
+
+blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre {
+    margin: 0
+}
+
+fieldset {
+    margin: 0
+}
+
+fieldset,legend {
+    padding: 0
+}
+
+menu,ol,ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+dialog {
+    padding: 0
+}
+
+textarea {
+    resize: vertical
+}
+
+input::placeholder,textarea::placeholder {
+    opacity: 1;
+    color: #9ca3af
+}
+
+[role=button],button {
+    cursor: pointer
+}
+
+:disabled {
+    cursor: default
+}
+
+audio,canvas,embed,iframe,img,object,svg,video {
+    display: block;
+    vertical-align: middle
+}
+
+img,video {
+    max-width: 100%;
+    height: auto
+}
+
+[hidden]:where(:not([hidden=until-found])) {
+    display: none
+}
+
+:root {
+    --hue-rotation: 0deg;
+    --contrast-value: 100%;
+    --saturation-value: 100%;
+    --background: 293.7 46.3% 92%;
+    --foreground: 296 56% 21%;
+    --card: 291 54% 97%;
+    --card-foreground: 240 10% 30%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 296 56% 21%;
+    --primary: 334.2 74.9% 56.9%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 314.7 61.6% 85.7%;
+    --secondary-foreground: 295.8 40.9% 34.5%;
+    --muted: 327.7 61.6% 78.7%;
+    --muted-foreground: 327 77% 38%;
+    --accent: 314.7 61.6% 85.7%;
+    --accent-foreground: 240 10% 30%;
+    --destructive: 335 94% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 304.6 27.7% 90.8%;
+    --input: 317.4 44.2% 83.1%;
+    --ring: 333.3,71.4%,50.6%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 290.3 49.2% 87.6%;
+    --sidebar-foreground: 240 10% 30%;
+    --sidebar-primary: 240 10% 30%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 60 5% 97%;
+    --sidebar-accent-foreground: 240 10% 30%;
+    --sidebar-border: 20 6% 92%;
+    --sidebar-ring: 333.3,71.4%,50.6%;
+    --gradient-noise-top: 292 42.9% 93.1%;
+    --color-heading: 336.3 70.3% 19.8%;
+    --chat-border: 304.8 61% 83.9%;
+    --chat-background: 300 56% 98%;
+    --chat-accent: #f5ecf9;
+    --chat-input-gradient: 295 100% 90%;
+    --chat-input-background: hsla(270,0%,100%,var(--blur-fallback,0.1));
+    --chat-overlay: hsla(309,63%,92%,var(--blur-fallback,0.72));
+    --wordmark-color: #ca0277
+    --font-proxima-nova: var(--font-proxima-nova);
+    --font-inter: var(--font-inter);
+    --font-comic-sans: var(--font-comic-sans);
+    --app-font: var(--font-proxima-nova);
+}
+
+.boring-dark,.dark {
+    --background: 313.8 24.5% 10.4%;
+    --foreground: 270 20% 97.8%;
+    --card: 300 15.8% 3.7%;
+    --card-foreground: 240 4.8% 95.9%;
+    --popover: 320 23.08% 5.1%;
+    --popover-foreground: 326 33% 96%;
+    --primary: 332 100% 32%;
+    --primary-foreground: 326 85% 90%;
+    --secondary: 273.8 15.1% 20.8%;
+    --secondary-foreground: 270 30% 83%;
+    --muted: 283 9% 25%;
+    --muted-foreground: 326 33% 86%;
+    --accent: 272 20% 27%;
+    --accent-foreground: 326 33% 96%;
+    --destructive: 335.82 74.44% 35.29%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 262.5 10% 15.7%;
+    --input: 326.3 20% 15.7%;
+    --ring: 333.3,71.4%,50.6%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 2.6% 7.6%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 318.5 20.6% 12.4%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 0 0% 0%;
+    --sidebar-ring: 333.3,71.4%,50.6%;
+    --gradient-noise-top: 309 15% 9%;
+    --color-heading: 328.2 45.9% 57.3%;
+    --chat-border: 333.3 22% 16.1%;
+    --chat-background: 270 16.13% 12.16%;
+    --chat-accent: rgba(25,21,30,.86);
+    --chat-input-gradient: 289 23% 23%;
+    --chat-input-background: hsla(270,10%,20%,var(--blur-fallback,0.4));
+    --chat-overlay: hsla(270,12%,16%,var(--blur-fallback,0.71));
+    --wordmark-color: #e3bad1
+}
+
+.boring-light {
+    --background: 293.7 0% 92%;
+    --foreground: 296 0% 21%;
+    --card: 291 0% 97%;
+    --card-foreground: 240 0% 30%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 296 0% 21%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 314.7 0% 85.7%;
+    --secondary-foreground: 295.8 0% 34.5%;
+    --muted: 327.7 0% 78.7%;
+    --muted-foreground: 327 0% 38%;
+    --accent: 314.7 0% 85.7%;
+    --accent-foreground: 240 0% 30%;
+    --destructive: 335 0% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 304.6 0% 90.8%;
+    --input: 317.4 0% 83.1%;
+    --ring: 333.3 0% 50.6%;
+    --sidebar-background: 290.3 0% 87.6%;
+    --sidebar-foreground: 240 0% 30%;
+    --sidebar-primary: 240 0% 30%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 60 0% 97%;
+    --sidebar-accent-foreground: 240 0% 30%;
+    --sidebar-border: 20 0% 92%;
+    --sidebar-ring: 333.3 0% 50.6%;
+    --gradient-noise-top: 292 0% 93.1%;
+    --color-heading: 336.3 0% 19.8%;
+    --chat-border: 304.8 0% 83.9%;
+    --chat-background: 300 0% 98%;
+    --chat-accent: #f3f3f3;
+    --chat-overlay: hsla(309,0%,92%,var(--blur-fallback,0.72));
+    --chat-input-gradient: 295 0% 90%;
+    --chat-input-background: hsla(270,0%,100%,var(--blur-fallback,0.1));
+    --wordmark-color: #666
+}
+
+.boring-dark {
+    --background: 313.8 0% 8.4%;
+    --foreground: 270 0% 97.8%;
+    --card: 300 0% 3.7%;
+    --card-foreground: 240 0% 95.9%;
+    --popover: 320 0% 5.1%;
+    --popover-foreground: 326 0% 96%;
+    --primary: 332 100% 32%;
+    --primary-foreground: 326 0% 90%;
+    --secondary: 273.8 0% 20.8%;
+    --secondary-foreground: 270 0% 83%;
+    --muted: 283 0% 25%;
+    --muted-foreground: 326 0% 69%;
+    --accent: 272 0% 27%;
+    --accent-foreground: 326 0% 96%;
+    --destructive: 335.82 0% 35.29%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 262.5 0% 15.7%;
+    --input: 326.3 0% 15.7%;
+    --ring: 333.3,0%,50.6%;
+    --sidebar-background: 240 0% 7.6%;
+    --sidebar-foreground: 240 0% 95.9%;
+    --sidebar-primary: 224.3 0% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 318.5 0% 12.4%;
+    --sidebar-accent-foreground: 240 0% 95.9%;
+    --sidebar-border: 0 0% 0%;
+    --sidebar-ring: 333.3 0% 50.6%;
+    --gradient-noise-top: 313.8 0% 8.4%;
+    --color-heading: 328.2 0% 49.8%;
+    --chat-border: 334.3 0% 16.9%;
+    --chat-background: 270 0% 12.16%;
+    --chat-accent: rgba(26,26,26,.86);
+    --chat-overlay: hsla(270,0%,16%,var(--blur-fallback,0.71));
+    --chat-input-gradient: 289 0% 21%;
+    --chat-input-background: hsla(270,0%,20%,var(--blur-fallback,0.4));
+    --wordmark-color: #cfcfcf
+}
+
+* {
+    border-color: hsl(var(--border))
+}
+
+:focus-visible {
+    outline-color: hsl(var(--ring));
+    outline-style: solid;
+    outline-width: 1px
+}
+
+body {
+    font-family: var(--app-font);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    overscroll-behavior-y: none
+}
+
+.font-sans {
+    font-family: var(--app-font);
+}
+
+@media (max-width: 768px) {
+    input,select,textarea {
+        font-size:16px!important
+    }
+}
+
+.prose input[type=checkbox] {
+    position: relative;
+    margin-top: -.125rem;
+    margin-right: .25rem;
+    height: 1rem;
+    width: 1rem;
+    cursor: pointer;
+    appearance: none;
+    border-radius: .25rem;
+    border-width: 2px;
+    border-color: hsl(var(--border));
+    background-color: hsl(var(--background));
+    vertical-align: middle;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-duration: .2s;
+    animation-duration: .2s
+}
+
+.prose input[type=checkbox]:checked {
+    border-color: hsl(var(--secondary));
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground))
+}
+
+.prose input[type=checkbox]:checked:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: .25rem;
+    width: .375rem;
+    border-width: 0 0 2px 2px;
+    border-color: hsl(var(--primary-foreground));
+    transform: translate(-50%,-60%) rotate(-45deg)
+}
+
+.min-h-pwa,body,html {
+    min-height: calc(100svh + env(safe-area-inset-top))
+}
+
+body {
+    overflow: hidden
+}
+
+.\!container {
+    width: 100%!important
+}
+
+.container {
+    width: 100%
+}
+
+@media (min-width: 420px) {
+    .\!container {
+        max-width:420px!important
+    }
+
+    .container {
+        max-width: 420px
+    }
+}
+
+@media (min-width: 640px) {
+    .\!container {
+        max-width:640px!important
+    }
+
+    .container {
+        max-width: 640px
+    }
+}
+
+@media (min-width: 768px) {
+    .\!container {
+        max-width:768px!important
+    }
+
+    .container {
+        max-width: 768px
+    }
+}
+
+@media (min-width: 900px) {
+    .\!container {
+        max-width:900px!important
+    }
+
+    .container {
+        max-width: 900px
+    }
+}
+
+@media (min-width: 1024px) {
+    .\!container {
+        max-width:1024px!important
+    }
+
+    .container {
+        max-width: 1024px
+    }
+}
+
+@media (min-width: 1170px) {
+    .\!container {
+        max-width:1170px!important
+    }
+
+    .container {
+        max-width: 1170px
+    }
+}
+
+@media (min-width: 1280px) {
+    .\!container {
+        max-width:1280px!important
+    }
+
+    .container {
+        max-width: 1280px
+    }
+}
+
+@media (min-width: 1536px) {
+    .\!container {
+        max-width:1536px!important
+    }
+
+    .container {
+        max-width: 1536px
+    }
+}
+
+.skew-x-\[-30deg\] {
+    --tw-skew-x: -30deg
+}
+
+.skew-x-\[30deg\] {
+    --tw-skew-x: 30deg
+}
+
+.scale-0,.skew-x-\[30deg\] {
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.border {
+    border-width: 1px
+}
+
+.border-0 {
+    border-width: 0
+}
+
+.border-2 {
+    border-width: 2px
+}
+
+.border-4 {
+    border-width: 4px
+}
+
+.border-b {
+    border-bottom-width: 1px
+}
+
+.border-b-0 {
+    border-bottom-width: 0
+}
+
+.border-b-2 {
+    border-bottom-width: 2px
+}
+
+.border-l {
+    border-left-width: 1px
+}
+
+.border-r {
+    border-right-width: 1px
+}
+
+.border-t {
+    border-top-width: 1px
+}
+
+.border-solid {
+    border-style: solid
+}
+
+.border-dashed {
+    border-style: dashed
+}
+
+.\!border-none {
+    border-style: none!important
+}
+
+.border-none {
+    border-style: none
+}
+
+.border-\[\#ffb525f7\] {
+    border-color: #ffb525f7
+}
+
+.border-border {
+    border-color: hsl(var(--border))
+}
+
+.border-chat-border {
+    border-color: hsl(var(--chat-border))
+}
+
+.border-chat-border\/40 {
+    border-color: hsl(var(--chat-border)/.4)
+}
+
+.border-chat-border\/50 {
+    border-color: hsl(var(--chat-border)/.5)
+}
+
+.border-chat-border\/70 {
+    border-color: hsl(var(--chat-border)/.7)
+}
+
+.border-destructive\/20 {
+    border-color: hsl(var(--destructive)/.2)
+}
+
+.border-gray-700 {
+    --tw-border-opacity: 1;
+    border-color: rgb(55 65 81/var(--tw-border-opacity,1))
+}
+
+.border-gray-800 {
+    --tw-border-opacity: 1;
+    border-color: rgb(31 41 55/var(--tw-border-opacity,1))
+}
+
+.border-green-500\/30 {
+    border-color: rgba(34,197,94,.3)
+}
+
+.border-input {
+    border-color: hsl(var(--input))
+}
+
+.border-muted-foreground\/10 {
+    border-color: hsl(var(--muted-foreground)/.1)
+}
+
+.border-neutral-500\/30 {
+    border-color: hsla(0,0%,45%,.3)
+}
+
+.border-orange-500\/30 {
+    border-color: rgba(249,115,22,.3)
+}
+
+.border-pink-500\/20 {
+    border-color: rgba(236,72,153,.2)
+}
+
+.border-pink-500\/30 {
+    border-color: rgba(236,72,153,.3)
+}
+
+.border-primary {
+    border-color: hsl(var(--primary))
+}
+
+.border-primary\/10 {
+    border-color: hsl(var(--primary)/.1)
+}
+
+.border-primary\/40 {
+    border-color: hsl(var(--primary)/.4)
+}
+
+.border-primary\/50 {
+    border-color: hsl(var(--primary)/.5)
+}
+
+.border-red-400\/20 {
+    border-color: hsla(0,91%,71%,.2)
+}
+
+.border-red-500\/30 {
+    border-color: rgba(239,68,68,.3)
+}
+
+.border-red-800\/20 {
+    border-color: rgba(153,27,27,.2)
+}
+
+.border-secondary {
+    border-color: hsl(var(--secondary))
+}
+
+.border-secondary-foreground\/10 {
+    border-color: hsl(var(--secondary-foreground)/.1)
+}
+
+.border-secondary-foreground\/\[0\.08\] {
+    border-color: hsl(var(--secondary-foreground)/.08)
+}
+
+.border-secondary\/40 {
+    border-color: hsl(var(--secondary)/.4)
+}
+
+.border-secondary\/50 {
+    border-color: hsl(var(--secondary)/.5)
+}
+
+.border-sidebar-border {
+    border-color: hsl(var(--sidebar-border))
+}
+
+.border-slate-300 {
+    --tw-border-opacity: 1;
+    border-color: rgb(203 213 225/var(--tw-border-opacity,1))
+}
+
+.border-transparent {
+    border-color: transparent
+}
+
+.border-white\/70 {
+    border-color: hsla(0,0%,100%,.7)
+}
+
+.border-yellow-400\/20 {
+    border-color: rgba(250,204,21,.2)
+}
+
+.border-yellow-500\/30 {
+    border-color: rgba(234,179,8,.3)
+}
+
+.border-t-transparent {
+    border-top-color: transparent
+}
+
+#chat-input, #chat-input:focus,
+#chat-input:focus-visible, #threads:focus-visible, #threads:focus, #search-input:focus-visible, #search-input:focus {
+outline: none !important;
+box-shadow: none !important;
+border-color: transparent !important;
+resize: none !important;
+}
