@@ -1,4 +1,4 @@
-# Perplexica 🎨
+# Perplexica 🔍
 
 > A powerful AI chat platform with custom color theming, multi-model support, and rich markdown rendering. Built with Next.js 15 and powered by multiple AI providers.
 
@@ -19,13 +19,13 @@ Perplexica is a modern AI chat application that brings together the best of mult
 
 ---
 
-## ✨ Key Features
+## ✅ Key Features
 
 ### 🎨 Custom Color Theme System
 - **HSL-Based Color Variables**: Fine-tune hue, saturation, and lightness for every UI element
 - **Dynamic Theme Switching**: Seamlessly toggle between vibrant colored themes and neutral "boring" modes
 - **Real-time Filter Controls**: Adjust hue rotation, contrast, and saturation on the fly
-- **Four Theme Variants**: 
+- **Four Theme Variants**:
   - Default (Pink/Magenta themed)
   - Dark (Deep purple/pink with high contrast)
   - Boring Light (Grayscale light mode)
@@ -53,7 +53,7 @@ Integrates with leading AI providers for maximum flexibility:
 - **Session Callbacks**: Custom JWT and session handlers
 - **Protected Routes**: Middleware-based route protection
 
-### 💬 Rich Markdown Support
+### 📝 Rich Markdown Support
 - **react-markdown** with **remark-gfm** for GitHub Flavored Markdown
 - **Syntax Highlighting**: Code blocks with react-syntax-highlighter
 - **Custom Prose Styling**: Typography optimized for readability
@@ -85,7 +85,7 @@ Integrates with leading AI providers for maximum flexibility:
 - **5-Source Results**: Curated information from multiple sources
 - **Autoprompt**: Enhanced query understanding
 
-### 💻 Additional Features
+### 🎛️ Additional Features
 - **Real-time Streaming**: Token-by-token response rendering with ReadableStream
 - **Message Editing**: Edit and resend messages
 - **Retry Functionality**: Regenerate AI responses
@@ -127,8 +127,8 @@ Integrates with leading AI providers for maximum flexibility:
 ## 📦 Installation
 
 ### Prerequisites
-- Node.js 20+ 
-- PostgreSQL database
+- Node.js 20+
+- PostgreSQL database (local or hosted, e.g. Railway, Neon, Render)
 - API keys for AI providers
 
 ### Setup
@@ -145,29 +145,24 @@ pnpm install
 ```
 
 3. **Environment variables**
-Create a `.env.local` file:
-```env
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/perplexica
 
-# NextAuth
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
+Create a `.env.local` file in the project root (see [Environment Variables](#-environment-variables) below).
 
-# AI Providers
-GEMINI_API_KEY=your-gemini-key
-GROQ_API_KEY=your-groq-key
-OPENROUTER_API_KEY=your-openrouter-key
+4. **PostgreSQL Setup**
 
-# Web Search
-EXA_API_KEY=your-exa-key
-```
+   You can use any PostgreSQL provider (local, Railway, Neon, Render, etc.):
 
-4. **Database setup**
-```bash
-pnpm db:generate
-pnpm db:migrate
-```
+   - **Local**: Install PostgreSQL and create a database:
+     ```sql
+     CREATE DATABASE perplexica;
+     ```
+   - **Hosted**: Create a project on [Neon](https://neon.tech), [Railway](https://railway.app), or [Render](https://render.com) and copy the connection string.
+
+   Then run the Drizzle migrations to set up the schema:
+   ```bash
+   pnpm db:generate
+   pnpm db:migrate
+   ```
 
 5. **Run development server**
 ```bash
@@ -178,65 +173,46 @@ Visit `http://localhost:3000`
 
 ---
 
-## 🎨 Color Theme Customization
+## 🔑 Environment Variables
 
-Perplexica's theme system is built on CSS custom properties with HSL color space:
+Create a `.env.local` file in your project root:
 
-### Theme Variables
-```css
-:root {
-  --hue-rotation: 0deg;
-  --saturation-value: 100%;
-  --contrast-value: 100%;
-  
-  /* Semantic colors */
-  --background: 293.7 46.3% 92%;
-  --foreground: 296 56% 21%;
-  --primary: 334.2 74.9% 56.9%;
-  --secondary: 314.7 61.6% 85.7%;
-  
-  /* Chat-specific */
-  --chat-input-background: hsla(270,0%,100%,0.1);
-  --chat-overlay: hsla(309,63%,92%,0.72);
-}
+```env
+# ─── Database ───────────────────────────────────────────────────────────────
+# PostgreSQL connection string
+DATABASE_URL=postgresql://user:password@localhost:5432/perplexica
+
+# ─── NextAuth ───────────────────────────────────────────────────────────────
+# Generate with: openssl rand -base64 32
+NEXTAUTH_SECRET=your-random-secret-key
+NEXTAUTH_URL=http://localhost:3000
+
+# ─── AI Providers ───────────────────────────────────────────────────────────
+# Google Gemini — https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=your-gemini-api-key
+
+# Groq — https://console.groq.com/keys
+GROQ_API_KEY=your-groq-api-key
+
+# OpenRouter — https://openrouter.ai/keys
+OPENROUTER_API_KEY=your-openrouter-api-key
+
+# ─── Web Search ─────────────────────────────────────────────────────────────
+# Exa — https://dashboard.exa.ai/api-keys
+EXA_API_KEY=your-exa-api-key
 ```
 
-### Customizing Colors
-Modify `app/globals.css` to adjust:
-- **Hue** (0-360): Shifts the entire color spectrum
-- **Saturation** (0-100%): Controls color intensity
-- **Lightness** (0-100%): Adjusts brightness
-
-The theme system includes:
-- 30+ CSS custom properties for granular control
-- Separate light and dark mode color palettes
-- Grayscale "boring" modes for accessibility
-- HSLA values for transparent overlays
+### Environment Variables Checklist
+- ✅ `DATABASE_URL` — PostgreSQL connection string
+- ✅ `NEXTAUTH_SECRET` — Random secret for NextAuth (min 32 chars)
+- ✅ `NEXTAUTH_URL` — Your deployment URL
+- ✅ `GEMINI_API_KEY` — Google AI API key
+- ✅ `GROQ_API_KEY` — Groq API key
+- ✅ `OPENROUTER_API_KEY` — OpenRouter API key
+- ✅ `EXA_API_KEY` — Exa web search API key
 
 ---
 
-## 🤖 Adding New Models
-
-Edit `lib/models.ts`:
-
-```typescript
-export const rawModels: Record<string, Omit<Model, "id">> = {
-  "Your Model Name": {
-    name: "Your Model Name",
-    logo: YourIcon,
-    info: "Description",
-    capabilities: ["vision", "web"],
-    favorite: true,
-    premium: false,
-    active: true
-  },
-  // ... more models
-};
-```
-
-Available capabilities: `vision`, `web`, `pdf`, `reasoning`
-
----
 
 ## 📁 Project Structure
 
@@ -272,143 +248,42 @@ perplexica/
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Add environment variables
-4. Deploy
+### Running Locally
 
-### Railway/Render
-1. Connect your repository
-2. Set PostgreSQL database
-3. Add environment variables
-4. Deploy
+1. **Clone and install**
+   ```bash
+   git clone https://github.com/yourusername/perplexica.git
+   cd perplexica
+   pnpm install
+   ```
 
-### Environment Variables Checklist
-- ✅ `DATABASE_URL` - PostgreSQL connection string
-- ✅ `NEXTAUTH_SECRET` - Random secret for NextAuth
-- ✅ `NEXTAUTH_URL` - Your deployment URL
-- ✅ `GEMINI_API_KEY` - Google AI API key
-- ✅ `GROQ_API_KEY` - Groq API key
-- ✅ `OPENROUTER_API_KEY` - OpenRouter API key
-- ✅ `EXA_API_KEY` - Exa web search API key
+2. **Set up environment variables**
+   Create a `.env.local` file with all required variables (see [Environment Variables](#-environment-variables)).
 
----
+3. **Set up PostgreSQL**
+   - Install PostgreSQL locally, then:
+     ```sql
+     CREATE DATABASE perplexica;
+     ```
+   - Set `DATABASE_URL=postgresql://user:password@localhost:5432/perplexica` in `.env.local`
 
-## 📝 Database Schema
+4. **Run migrations**
+   ```bash
+   pnpm db:generate
+   pnpm db:migrate
+   ```
 
-### Users Table
-```typescript
-- id: UUID (primary key)
-- email: Text (unique)
-- hashedPassword: Text
-- username: Text
-- messageCount: Integer (default: 50)
-- createdAt: Timestamp
-```
+5. **Start the development server**
+   ```bash
+   pnpm dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000).
 
-### Chats Table
-```typescript
-- id: UUID (primary key)
-- title: Text
-- userId: UUID (foreign key)
-- modelId: Text
-- pinned: Boolean
-- createdAt: Timestamp
-- updatedAt: Timestamp
-```
-
-### Messages Table
-```typescript
-- id: UUID (primary key)
-- chatId: UUID (foreign key)
-- role: Text (user/assistant)
-- content: Text
-- parentId: UUID (self-reference)
-- activeChildId: UUID (self-reference)
-- createdAt: Timestamp
-- updatedAt: Timestamp
-```
+6. **Or build and run in production mode**
+   ```bash
+   pnpm build
+   pnpm start
+   ```
+   Open [http://localhost:3000](http://localhost:3000).
 
 ---
-
-## 🔥 Features in Detail
-
-### Real-time Streaming
-Perplexica uses Next.js Edge Runtime and ReadableStream for ultra-fast token streaming:
-
-```typescript
-const stream = new ReadableStream({
-  async start(controller) {
-    for await (const chunk of apiStream) {
-      const text = chunk.text();
-      controller.enqueue(new TextEncoder().encode(text));
-    }
-    controller.close();
-  },
-});
-```
-
-### Message Branching
-Messages support parent-child relationships for conversation branching:
-- Edit any message in the conversation
-- Create alternate conversation paths
-- Navigate between different response variations
-
-### Theme System Architecture
-Built on CSS custom properties for maximum flexibility:
-- HSL color space for easy manipulation
-- Separate variables for light/dark modes
-- Glassmorphism effects with HSLA transparency
-- Dynamic CSS variable updates via JavaScript
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a pull request
-
-### Development Guidelines
-- Follow TypeScript best practices
-- Use Tailwind CSS for styling
-- Write meaningful commit messages
-- Test changes before submitting PR
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [Next.js](https://nextjs.org/) - The React framework for production
-- [NextAuth](https://next-auth.js.org/) - Authentication for Next.js
-- [Drizzle ORM](https://orm.drizzle.team/) - TypeScript ORM for SQL databases
-- [@lobehub/icons](https://github.com/lobehub/lobe-icons) - Beautiful AI provider icons
-- [react-markdown](https://github.com/remarkjs/react-markdown) - Markdown rendering
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Vercel](https://vercel.com/) - Deployment and hosting platform
-
----
-
-## 📧 Support
-
-For questions and support, please open an issue on GitHub or contact the maintainers.
-
----
-
-<p align="center">
-  <strong>Built with ❤️ using Next.js, NextAuth, and Drizzle ORM</strong>
-</p>
-
-<p align="center">
-  <sub>Perplexica - Empowering conversations with AI</sub>
-</p>
