@@ -7,16 +7,12 @@ export async function GET(req: Request) {
     const headersList = await headers();
     const userId = headersList.get('x-user-id');
     
-    console.log('[GET /api/chats] User ID:', userId);
-    
     if (!userId) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
     const chats = await chatQueries.getChats(userId);
     
-    console.log('[GET /api/chats] Found chats:', chats?.length);
-
     return NextResponse.json({ chats });
   } catch (error) {
     console.error('Error in GET /api/chats:', error);

@@ -32,7 +32,7 @@ async function handleGetRequest(req: Request) {
     
     return NextResponse.json({ messages: messages || [] });
   } catch (error) {
-    console.error('Error in GET /api/chats/[chatId]/messages:', error);
+    console.error('Error fetching messages:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -82,7 +82,7 @@ async function handlePostRequest(req: Request) {
     
     return NextResponse.json({ userMessage, aiMessage });
   } catch (error) {
-    console.error('Error in POST /api/chats/[chatId]/messages:', error);
+    console.error('Error creating messages:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

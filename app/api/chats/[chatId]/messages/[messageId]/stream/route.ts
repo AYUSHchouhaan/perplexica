@@ -132,22 +132,15 @@ async function handleRequest(req: Request) {
     const headersList = await headers();
     const userId = headersList.get('x-user-id');
 
-    console.log('🚀 [StreamRoute] Request received:', {
-      chatId,
-      messageId,
-      webSearch: body.webSearch,
-      modelId: body.modelId
-    });
-
     if (!userId) {
-      console.error('❌ [StreamRoute] Unauthorized: No user session');
+      console.error('Unauthorized: No user session');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const chat = await chatQueries.getChatById(chatId, userId);
 
     if (!chat) {
-      console.error('❌ [StreamRoute] Chat not found or unauthorized:', chatId);
+      console.error('Chat not found or unauthorized:', chatId);
       return NextResponse.json({ error: 'Chat not found or unauthorized' }, { status: 404 });
     }
     
@@ -155,29 +148,20 @@ async function handleRequest(req: Request) {
     let searchContext = '';
     
     if (body.webSearch) {
-      console.log('🔍 [StreamRoute] Web search enabled, fetching last user message...');
       const allMessages = await messageQueries.getMessagesByChat(chatId);
       
       // Find the last user message (most recent one)
       const lastUserMessage = [...allMessages].reverse().find(m => m.role === 'user');
       
       if (lastUserMessage?.content) {
-        console.log('🔍 [StreamRoute] Running web search for:', lastUserMessage.content);
         searchContext = await simpleWebSearch(lastUserMessage.content);
-        console.log('✅ [StreamRoute] Web search completed, context length:', searchContext.length);
-      } else {
-        console.warn('⚠️ [StreamRoute] No user message found for web search');
       }
-    } else {
-      console.log('ℹ️ [StreamRoute] Web search not enabled for this message');
     }
     
     // Use modelId from request body if provided, otherwise fall back to chat's saved model
     const selectedModelId = body.modelId || chat.modelId || 'gemini-2-5-flash';
     const modelInfo = modelMapping[selectedModelId] || defaultModel;
     const { provider, name: apiModelName } = modelInfo;
-    
-    console.log('🤖 [StreamRoute] Using model:', { selectedModelId, provider, apiModelName });
     
     let apiStream;
 
@@ -188,8 +172,6 @@ async function handleRequest(req: Request) {
       const systemPrompt = searchContext 
         ? `${SYSTEM_PROMPT}\n\nWeb Search Results:\n${searchContext}\n\nUse the above web search results to provide accurate, up-to-date information in your response.`
         : SYSTEM_PROMPT;
-      
-      console.log('🤖 [StreamRoute] Google - System prompt length:', systemPrompt.length, 'Has search:', !!searchContext);
       
       const model = genAI.getGenerativeModel({ 
         model: apiModelName,
@@ -211,8 +193,6 @@ async function handleRequest(req: Request) {
         ? `${SYSTEM_PROMPT}\n\nWeb Search Results:\n${searchContext}\n\nUse the above web search results to provide accurate, up-to-date information in your response.`
         : SYSTEM_PROMPT;
       
-      console.log('🤖 [StreamRoute] Groq - System prompt length:', systemPrompt.length, 'Has search:', !!searchContext);
-      
       // Add system prompt at the beginning for Groq
       const messagesWithSystem = [
         { role: 'system' as const, content: systemPrompt },
@@ -233,8 +213,6 @@ async function handleRequest(req: Request) {
       const systemPrompt = searchContext 
         ? `${SYSTEM_PROMPT}\n\nWeb Search Results:\n${searchContext}\n\nUse the above web search results to provide accurate, up-to-date information in your response.`
         : SYSTEM_PROMPT;
-      
-      console.log('🤖 [StreamRoute] OpenRouter - System prompt length:', systemPrompt.length, 'Has search:', !!searchContext);
       
       // Add system prompt at the beginning for OpenRouter
       const messagesWithSystem = [
@@ -266,21 +244,16 @@ async function handleRequest(req: Request) {
       apiStream = response.body;
     } 
     else {
-        console.error('❌ [StreamRoute] Unsupported provider:', provider);
+        console.error('Unsupported provider:', provider);
         return NextResponse.json({ error: `Unsupported provider: ${provider}`}, { status: 500 });
     }
-
-    console.log('📡 [StreamRoute] Starting stream response...');
 
     const stream = new ReadableStream({
       async start(controller) {
         let fullResponse = '';
         const encoder = new TextEncoder();
         try {
-          console.log('🎬 [StreamRoute] Stream started');
-          
           if (provider === 'google') {
-            console.log('📨 [StreamRoute] Processing Google stream...');
             const googleStream = apiStream as AsyncIterable<GoogleStreamChunk>;
             for await (const chunk of googleStream) {
               const chunkText = chunk.text();
@@ -289,9 +262,7 @@ async function handleRequest(req: Request) {
                 controller.enqueue(encoder.encode(chunkText));
               }
             }
-            console.log('✅ [StreamRoute] Google stream complete, total length:', fullResponse.length);
           } else if (provider === 'openrouter') {
-            console.log('📨 [StreamRoute] Processing OpenRouter stream...');
             const reader = (apiStream as ReadableStream).getReader();
             const decoder = new TextDecoder();
             let done = false;
@@ -323,9 +294,7 @@ async function handleRequest(req: Request) {
                 }
               }
             }
-            console.log('✅ [StreamRoute] OpenRouter stream complete, total length:', fullResponse.length);
           } else {
-            console.log('📨 [StreamRoute] Processing Groq stream...'); 
             const groqStream = apiStream as AsyncIterable<GroqStreamChunk>;
             for await (const chunk of groqStream) {
               const chunkText = chunk.choices[0]?.delta?.content ?? '';
@@ -334,22 +303,18 @@ async function handleRequest(req: Request) {
                 controller.enqueue(encoder.encode(chunkText));
               }
             }
-            console.log('✅ [StreamRoute] Groq stream complete, total length:', fullResponse.length);
           }
           
           if (fullResponse) {
-            console.log('💾 [StreamRoute] Saving message to database...');
             await messageQueries.updateMessageContent(messageId, fullResponse);
             await chatQueries.touchChat(chatId);
             // Decrease message count after successful response
             await userQueries.decreaseMessageCount(userId);
-            console.log('✅ [StreamRoute] Message saved successfully');
           }
         } catch (streamError) {
-          console.error("❌ [StreamRoute] Error during stream processing:", streamError);
+          console.error("Error during stream processing:", streamError);
           controller.error(streamError);
         } finally {
-          console.log('🏁 [StreamRoute] Stream closed');
           controller.close();
         }
       },
@@ -357,7 +322,7 @@ async function handleRequest(req: Request) {
 
     return new Response(stream, { headers: { "Content-Type": "text/plain; charset=utf-8" } });    
   } catch (error) {
-    console.error("❌ [StreamRoute] Fatal error in chat streaming API:", error);
+    console.error("Fatal error in chat streaming API:", error);
     return NextResponse.json({ error: "An error occurred." }, { status: 500 });
   }
 }
