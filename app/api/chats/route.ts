@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import { chatQueries } from '@/db/queries';
-import { headers } from 'next/headers';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function GET(req: Request) {
   try {
-    const headersList = await headers();
-    const userId = headersList.get('x-user-id');
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     
     if (!userId) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
@@ -22,8 +23,8 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const headersList = await headers();
-    const userId = headersList.get('x-user-id');
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }

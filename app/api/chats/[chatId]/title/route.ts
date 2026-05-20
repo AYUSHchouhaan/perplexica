@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { chatQueries, messageQueries } from '@/db/queries';
-import { headers } from 'next/headers';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { eq, and } from 'drizzle-orm';
 import { db } from '@/db/drizzleclient';
@@ -21,8 +22,8 @@ async function handlePostRequest(req: Request) {
     }
     await req.json();
 
-    const headersList = await headers();
-    const userId = headersList.get('x-user-id');
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

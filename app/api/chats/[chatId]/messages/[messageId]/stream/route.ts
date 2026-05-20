@@ -1,5 +1,6 @@
 import { chatQueries, messageQueries, userQueries } from '@/db/queries';
-import { headers } from 'next/headers';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Groq } from 'groq-sdk';
 import { NextResponse } from 'next/server';
@@ -129,8 +130,8 @@ async function handleRequest(req: Request) {
     const chatId = pathParts[pathParts.indexOf('chats') + 1];
     const messageId = pathParts[pathParts.indexOf('messages') + 1];
     const body = await req.json(); 
-    const headersList = await headers();
-    const userId = headersList.get('x-user-id');
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
 
     if (!userId) {
       console.error('Unauthorized: No user session');
@@ -177,7 +178,7 @@ async function handleRequest(req: Request) {
         model: apiModelName,
         systemInstruction: systemPrompt
       });
-
+      
       const history = await getChatHistory(chatId, 'google');
       const chatSession = model.startChat({ history });
       const result = await chatSession.sendMessageStream("");

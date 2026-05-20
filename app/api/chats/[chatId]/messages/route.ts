@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { chatQueries, messageQueries } from '@/db/queries';
-import { headers } from 'next/headers';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function GET(req: Request) {
   return handleGetRequest(req);
@@ -15,8 +16,8 @@ async function handleGetRequest(req: Request) {
     const url = new URL(req.url);
     const pathParts = url.pathname.split('/');
     const chatId = pathParts[pathParts.indexOf('chats') + 1];
-    const headersList = await headers();
-    const userId = headersList.get('x-user-id');
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -44,8 +45,8 @@ async function handlePostRequest(req: Request) {
     const chatId = pathParts[pathParts.indexOf('chats') + 1];
     const { content } = await req.json();
 
-    const headersList = await headers();
-    const userId = headersList.get('x-user-id');
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
