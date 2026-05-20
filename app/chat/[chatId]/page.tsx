@@ -100,6 +100,9 @@ export default function ChatPage() {
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) return;
 
+    // Capture before any state updates — messages is a stale closure inside async code
+    const isFirstMessage = messages.length === 0;
+
     console.log('📨 [ChatPage] Sending message...', {
       content: content.substring(0, 50) + '...',
       webSearch: webSearchEnabled,
@@ -168,28 +171,18 @@ export default function ChatPage() {
       
       console.log('✅ [ChatPage] Stream complete!', { totalChunks: chunkCount });
       
-      // Only generate title for the first message in a new chat
-      // At this point, messages array has 2 items: user message + AI response
-      if (messages.length === 2) { // First conversation (1 user + 1 AI message)
-        console.log('📝 [ChatPage] Checking if this is a new chat...');
-        const currentChat = (await (await fetch(`/api/chats?chatId=${chatId}`)).json()).chats[0];
-        if (currentChat.title === 'New Chat') {
-          console.log('📝 [ChatPage] First message in new chat - generating title...');
-          fetch(`/api/chats/${chatId}/title`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({}),
-          }).then(() => {
-            console.log('✅ [ChatPage] Chat title generated');
-            window.dispatchEvent(new CustomEvent('chats-updated'));
-          }).catch((err) => {
-            console.error('❌ [ChatPage] Title generation failed:', err);
-          });
-        } else {
-          console.log('ℹ️ [ChatPage] Chat already has title:', currentChat.title);
-        }
-      } else {
-        console.log('ℹ️ [ChatPage] Existing chat - skipping title generation. Message count:', messages.length);
+      if (isFirstMessage) {
+        console.log('📝 [ChatPage] First message — generating title...');
+        fetch(`/api/chats/${chatId}/title`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({}),
+        }).then(() => {
+          console.log('✅ [ChatPage] Chat title generated');
+          window.dispatchEvent(new CustomEvent('chats-updated'));
+        }).catch((err) => {
+          console.error('❌ [ChatPage] Title generation failed:', err);
+        });
       }
 
     } catch (error) {
