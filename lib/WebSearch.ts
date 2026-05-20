@@ -21,12 +21,13 @@ export async function simpleWebSearch(query: string): Promise<string> {
       body: JSON.stringify({
         query,
         numResults: 5,
-        type: "auto",
+        type: "keyword", // Use keyword for broader, more current results
         contents: {
-          text: true,
-          summary: true,
+          text: true, // Get page text content
+          summary: true, // Get AI-generated summary
         },
-        useAutoprompt: true,
+        useAutoprompt: true, // Better query understanding
+        startPublishedDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // Last 7 days
       }),
     });
 
